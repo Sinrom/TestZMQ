@@ -27,3 +27,7 @@
 *.exe
 *.out
 *.app
+
+# Directory
+[Bb]in/
+[Bb]uild/
