@@ -1,33 +1,31 @@
+#include <chrono>
 #include <iostream>
 #include <string>
+#include <thread>
 #include <zmq.hpp>
-#ifndef _WIN32
-#include <unistd.h>
-#else
-#include <windows.h>
 
-#define sleep(n) Sleep(n)
-#endif
+using namespace std;
 
 int main(int argc, char *argv[])
 {
     zmq::context_t ctx(1);
     zmq::socket_t socket(ctx, ZMQ_REQ);
 
-    std::cout << "Connecting to Server" << std::endl;
+    cout << "Connecting to Server" << endl;
     socket.connect("tcp://localhost:5555");
 
     while (true)
     {
         zmq::message_t request(5);
         memcpy(request.data(), "Hello", 5);
-
         socket.send(request);
+
+        this_thread::sleep_for(chrono::milliseconds(100));
 
         zmq::message_t rep;
         socket.recv(&rep);
 
-        std::cout << std::string((const char*)rep.data(), rep.size()) << std::endl;
+        cout << string((const char*)rep.data(), rep.size()) << endl;
     }
 
     return 0;

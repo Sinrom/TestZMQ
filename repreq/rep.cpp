@@ -1,13 +1,10 @@
+#include <chrono>
 #include <iostream>
 #include <string>
+#include <thread>
 #include <zmq.hpp>
-#ifndef _WIN32
-#include <unistd.h>
-#else
-#include <windows.h>
 
-#define sleep(n) Sleep(n)
-#endif
+using namespace std;
 
 int main(int argc, char *argv[])
 {
@@ -22,7 +19,8 @@ int main(int argc, char *argv[])
 		socket.recv(&rep);
 		std::cout << "Recv msg: " << std::endl;
 
-		sleep(1);
+		this_thread::sleep_for(chrono::milliseconds(100));
+		cout << string((const char*)rep.data(), rep.size()) << endl;
 
 		zmq::message_t sendMsg(5);
 		memcpy(sendMsg.data(), "SendM", 5);

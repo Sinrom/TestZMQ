@@ -11,6 +11,10 @@ add_definitions("-Wno-sign-compare")
 
 project(zmq_study)
 
+add_subdirectory(pubsub)
+add_subdirectory(pushpull)
 add_subdirectory(repreq)
+add_subdirectory(routerdealer)
+add_subdirectory(xpubxsub)
 
 set(CMAKE_INSTALL_PREFIX "~/bin/zmq_study")
